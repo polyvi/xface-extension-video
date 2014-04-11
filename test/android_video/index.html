@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,maximum-scale=1.0,initial-scale=1.0" />
+     <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <!-- ISO-8859-1 -->
+     <title>xFace Mobile Spec</title>
+     <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+     <script type="text/javascript" charset="utf-8" src="../base.js"></script>
+     <script type="text/javascript" charset="utf-8">
+
+        var deviceReady = false;
+
+        var videoSrcList =['http://broken-links.com/tests/media/BigBuck.m4v', 'test.m4v', 'testvideo.mp4'];
+
+        //-------------------------------------------------------------------------
+        // Function called when page has finished loading.
+        //-------------------------------------------------------------------------
+        function init() {
+            document.addEventListener("deviceready", function() {
+                deviceReady = true;
+                console.log("Device="+device.platform+" "+device.version);
+            }, false);
+            window.setTimeout(function() {
+                if (!deviceReady) {
+                    alert("Error: xFace did not initialize.  Demo will not run correctly.");
+                }},1000);
+        }
+
+        function playWebVideoWithNativeForAndroid4(src) {
+            var path = src;
+            var nativeVideo = new Video(path, onSuccess, onError);
+            nativeVideo.play();
+        }
+
+        function onSuccess(msg) {
+            eventOutput(msg);
+        }
+
+        function onError(errorcode) {
+            eventOutput("play video error: "+errorcode);
+        }
+
+        var eventOutput = function(s) {
+            var el = document.getElementById("video_status");
+            el.innerHTML =  s;
+        }
+     </script>
+  </head>
+  <body onload="init();" id="stage" class="theme">
+  <h1>Video</h1>
+       <div id="descr">
+        测试说明: <br/>
+        <android>
+           1、本测试只在Android 4.x系统的手机进行测试，且需安装播放器 <br/>
+           2、确保workspace 下面有相应的文件 <br/>
+           3、播放网络文件可能存在问题 <br/>
+        </android>
+    </div>
+    <div id="info">
+        <b>Status:</b> <span id="video_status"></span>
+    </div>
+    <h2>Action</h2>
+        <div class="btn large" data-platform="android" onclick="playWebVideoWithNativeForAndroid4(videoSrcList[0]);">play web video in Android 4.x only</div>
+        <div class="btn large" data-platform="android" onclick="playWebVideoWithNativeForAndroid4(videoSrcList[1]);">play local video1 in Android 4.x only</div>
+        <div class="btn large" data-platform="android" onclick="playWebVideoWithNativeForAndroid4(videoSrcList[2]);">play local video2 in Android 4.x only</div>
+    <h2> </h2>
+        <div class="backBtn" onclick="window.history.back();">Back</div>
+  </body>
+</html>

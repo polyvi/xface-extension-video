@@ -1,0 +1,32 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.polyvi.xface.extension.video"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        version="1.0.0-dev">
+
+    <name>Video</name>
+    <author>PolyVi Inc.</author>
+    <description>xFace Video Extension</description>
+    <license>GPLv3</license>
+    <keywords>cordova,xface,video</keywords>
+
+    <dependency id="org.apache.cordova.file" />
+
+    <js-module src="www/video.js" name="Video">
+        <clobbers target="Video" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Video">
+                <param name="android-package" value="com.polyvi.xface.extension.video.XVideoExt"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+        <source-file src="src/android/XVideoExt.java" target-dir="src/com/polyvi/xface/extension/video" />
+     </platform>
+</plugin>
